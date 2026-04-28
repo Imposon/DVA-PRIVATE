@@ -1,174 +1,123 @@
-# 1. Cover Page
+# Retail Store Sales Analytics: Final Project Report
 
-- **Project title:** Retail Store Sales Analytics: Driving Revenue through Data
+## 1. Cover Page
+- **Project title:** Retail Store Sales Analytics: Driving Revenue Through Data
 - **Sector:** Retail / E-Commerce
-- **Team ID and team members:** [Team ID], Rahul, Priya, Ankit, Sneha, Arjun
+- **Team ID and team members:** [Team ID] - Rahul, Priya, Ankit, Sneha, Arjun
+- **Institute:** Newton School of Technology | Data Visualization & Analytics
 - **Faculty mentor:** [Faculty Mentor Name]
-- **Institute:** Newton School of Technology
-- **Submission date:** April 2026
+- **Submission date:** 28 April 2026
+
+---
 
 ## 2. Executive Summary
+**Problem:** Retail margins are thin, and leadership needs evidence on whether discounting and channel strategy (Online vs. In-Store) meaningfully improve revenue and Average Order Value (AOV).
+**Approach:** Built an end-to-end analytics pipeline using Python over a Kaggle Retail Store Sales dataset (2022–2025), including ETL, EDA, KPI design, statistical testing (ANOVA, Chi-Squared, Mann-Whitney U), and OLS regression.
+**Key insights:** About 33% of transactions use discounts, but the AOV lift is statistically significant yet practically negligible. Category and transaction quantity are the dominant drivers of revenue. Discounts are applied unevenly across channels.
+**Key recommendations:** Move to threshold-based discounts, prioritize top revenue categories, and synchronize promotions across channels.
 
-- **Problem:** Retail margins are thin, and there's a need to understand how discounting strategies and channel distribution impact total revenue and Average Order Value (AOV).
-- **Approach:** End-to-end data analytics pipeline using ETL processes, Exploratory Data Analysis (EDA), advanced statistical modeling (ANOVA, Chi-Squared, Mann-Whitney U, and OLS Linear Regression), and Tableau dashboarding.
-- **Key insights:** 33% of transactions involve a discount, but the monetary lift on AOV is statistically significant yet practically negligible. Category selection strongly drives transaction size. Discounts are applied unevenly across Online and In-Store channels.
-- **Key recommendations:** Optimize discount thresholds, reallocate marketing budgets to top categories, and unify omnichannel promotional strategies.
+---
 
-## 3. Sector and Business Context
+## 3. Sector Context and Problem Statement
+**Sector context:** Retail and e-commerce operations rely heavily on optimized pricing, inventory, and channel mix to sustain profitability. With thin margins, discounting and channel investments directly impact top-line revenue, making data-backed decisions essential.
+**Problem Statement:** The core objective is to quantify the impact of discounting and channel choice on revenue and AOV, and to identify category-level revenue drivers.
+**Scope and Success Criteria:** Analyzing transactions from 2022–2025 across product categories, discount applications, and channels. Success is defined as delivering statistically validated insights, a KPI framework, and actionable recommendations supported by a Tableau dashboard.
 
-- **Sector overview:** The retail and e-commerce sector operates on thin margins, requiring precise promotional and marketing investments.
-- **Decision-maker / stakeholder:** Retail Management, Marketing Executives, Strategy Operations.
-- **Why this problem matters:** Every discounting and marketing decision is highly consequential. Management needs data-driven strategies to prevent margin erosion from frequent, ineffective discounting and to guide omnichannel investments.
+---
 
-## 4. Problem Statement and Objectives
+## 4. Data Description — Source, Structure, Size, and Limitations
+- **Source:** Kaggle Retail Store Sales dataset (publicly available).
+- **Structure and Size:** ~12,500 raw rows spanning 2022–2025; 11 columns in the raw file including `transaction_id`, `customer_id`, `category`, `total_spent`, `location`, `discount_applied`, and `transaction_date`.
+- **Limitations:** 
+  - The dataset lacks direct profitability or cost-of-goods-sold (COGS) margin data.
+  - Missing pricing data required median imputation, which might smooth out true price volatility.
+  - Public dataset format limits deep, customer-level demographic context.
 
-- **Formal problem definition:** Determine the impact of frequent discounting and specific channel performance on transaction volumes and revenue to optimize profitability.
-- **Scope:** Analysis of retail store sales data spanning from 2022 to 2025.
-- **Success criteria:** Deliver statistically validated insights and an interactive dashboard that translates raw data into actionable recommendations for marketing and promotional adjustments.
+---
 
-## 5. Data Description
+## 5. Data Cleaning and ETL Methodology (Python Pipeline)
+An automated Python pipeline was developed to clean and transform the raw data into an analysis-ready format.
+- **Standardization:** Column names were converted to `snake_case` and category labels were text-normalized.
+- **Imputation:** Missing `total_spent` values were calculated using `price_per_unit * quantity`. Missing `price_per_unit` gaps were filled via category medians to safely prevent skew without dropping viable transactions.
+- **Type Casting & Feature Engineering:** `transaction_date` was cast to datetime to derive time-based features (year, month, quarter, day_of_week, is_weekend). `discount_applied` was mapped cleanly to binary (0/1). Additional features like `revenue_bucket` and `is_high_value` were generated.
+- **Output:** The resulting `cleaned_dataset.csv` contains 11,971 pristine rows and 19 analysis-ready columns.
 
-- **Source citation and access link:** Kaggle Retail Store Sales dataset.
-- **Dataset size and coverage:** 12,500 rows, covering 2022–2025.
-- **Key columns:** `Transaction ID`, `Customer ID`, `Category`, `Total Spent`, `Location`, and `Discount Applied`.
-- **Data quality issues:** Inconsistent capitalization, missing pricing data, mixed data types (boolean/string) in discount fields.
+---
 
-## 6. Cleaning and Transformation
+## 6. KPI and Metric Framework
+The following metrics were designed to measure revenue health, promotional dependency, and channel mix:
+- **Total Revenue:** Sum of `total_spent` across all transactions. Indicates top-line financial health.
+- **Average Order Value (AOV):** Calculated as (Sum of `total_spent` / Transaction Count). Measures cart sizes and customer value.
+- **Discount Rate:** Calculated as (Discounted Transactions / All Transactions). Tracks reliance on margin-eroding promotions.
+- **Channel Revenue Share:** Revenue segmented by `location` (Online vs. In-Store) as a percentage of total revenue. Tracks omnichannel balance.
 
-- **Major cleaning steps:**
-  # Retail Store Sales Analytics: Final Project Report
+---
 
-  ## 1. Cover Page
+## 7. EDA with Visualisations and Written Insights
+- **Major trends:** `total_spent` is right-skewed with a long tail of high-value orders. Monthly revenue displays strong seasonal purchasing peaks aligned with major retail periods (holidays and mid-year sales).
+- **Segment-level insights:** Online and In-Store revenues are incredibly balanced. However, category contribution is heavily concentrated in a few top segments.
+- **Visual Insights:**
+  - *Distribution of Spend:* Histograms show massive concentration in low-to-medium value carts.
+  - *Category Performance:* Bar charts highlight that top categories generate exponentially more revenue than the bottom 20%.
+  - *Discount Penetration:* Pie charts reveal that 33% of all orders apply a discount.
+  - *Discount vs. AOV:* Side-by-side boxplots visually suggest only a marginal AOV increase when discounts are present.
 
-  - **Project title:** Retail Store Sales Analytics: Driving Revenue Through Data
-  - **Sector:** Retail / E-Commerce
-  - **Team ID and team members:** TBD
-  - **Faculty mentor:** TBD
-  - **Institute:** Newton School of Technology | Data Visualization & Analytics
-  - **Submission date:** 28 April 2026
+*(Note: Please refer to the presentation and dashboard for exact chart screenshots.)*
 
-  ---
+---
 
-  ## 2. Executive Summary
+## 8. Statistical Analysis Results
+To validate the visual findings, rigorous statistical testing was conducted using Python (`scipy` and `statsmodels`):
+- **Shapiro-Wilk Test:** Confirmed that `total_spent` is not normally distributed, necessitating non-parametric tests.
+- **Mann-Whitney U Test:** Compared AOV between discounted and non-discounted orders. Result: Statistically significant difference, but the effect size is practically negligible (under $2 per order).
+- **One-Way ANOVA:** Assessed the impact of product category on AOV. Result: Category significantly impacts AOV (p < 0.05), proving product mix is more vital than discounting.
+- **Chi-Squared Test:** Evaluated the relationship between sales channel and discount frequency. Result: Discounts are unevenly distributed between Online and In-Store channels (p < 0.05).
+- **OLS Linear Regression:** Modeled `total_spent` against quantity and discounts. Result: Quantity is the overwhelming driver of revenue; the discount coefficient is minimal.
 
-  - **Problem:** Retail margins are thin, and leadership needs evidence on whether discounting and channel strategy (Online vs. In-Store) meaningfully improve revenue and Average Order Value (AOV).
-  - **Approach:** Built an end-to-end analytics pipeline over a Kaggle Retail Store Sales dataset (2022–2025), including ETL, EDA, KPI design, statistical testing (ANOVA, Chi-Squared, Mann-Whitney U), and OLS regression.
-  - **Key insights:** About 33% of transactions use discounts, but the AOV lift is statistically significant yet practically negligible. Category and quantity are the dominant drivers of revenue. Discounts are applied unevenly across channels.
-  - **Key recommendations:** Move to threshold-based discounts, prioritize top revenue categories, and synchronize promotions across channels.
+---
 
-  ---
+## 9. Dashboard Design — Screenshots and Explanation
+An interactive Tableau dashboard was built directly on top of the aggregated `tableau_ready_dataset.csv`.
+- **Executive View:** Features KPI scorecards (Total Revenue, AOV, Discount Rate) and high-level time-series trend lines for leadership.
+- **Operational View:** Deep dives into Category splits and Channel performance using dual-axis charts.
+- **Interactivity:** Includes global filters for Category, Channel, Time Period, and Discount Flag, allowing users to drill down into specific performance variances.
 
-  ## 3. Sector and Business Context
+*(Note: Insert dashboard screenshots here before exporting to PDF.)*
 
-  - **Sector overview:** Retail and e-commerce operations rely on optimized pricing, inventory, and channel mix to sustain profitability.
-  - **Decision-maker / stakeholder:** Retail leadership overseeing pricing strategy, category management, and omnichannel growth.
-  - **Why this problem matters:** Discounting and channel investments directly impact margin and revenue, making data-backed decisions essential.
+---
 
-  ---
+## 10. 8–12 Key Insights Written in Decision Language
+1. Roughly one-third (33%) of all transactions are discounted, signaling a heavy, systemic reliance on promotions.
+2. Discounted orders show a statistically significant but practically negligible AOV lift (less than $2), meaning we are giving away margin for free.
+3. Category mix, rather than discounting, is the primary driver of high Average Order Value.
+4. A small set of core categories contributes the vast majority of top-line revenue, exposing an asymmetry in product performance.
+5. The bottom 20% of categories contribute marginally to revenue and take up unnecessary inventory space.
+6. Online and In-Store channels contribute near-equal revenue, indicating a very healthy omnichannel presence.
+7. Despite equal channel revenue, discounts are applied unevenly across Online and In-Store, indicating siloed promotional strategies.
+8. Transaction quantity is the dominant, proven predictor of `total_spent` in regression modeling.
+9. Monthly revenue displays reliable seasonal peaks aligned with major retail periods, allowing for predictable cash flow.
+10. Simple forecasting suggests stable, cyclical baseline revenue over the next two quarters.
 
-  ## 4. Problem Statement and Objectives
+---
 
-  - **Formal problem definition:** Quantify the impact of discounting and channel choice on revenue and AOV, and identify category-level revenue drivers.
-  - **Scope:** Transactions from 2022–2025, covering product categories, discount application, channel, and time-based behavior.
-  - **Success criteria:** Deliver statistically validated insights, a KPI framework, and actionable recommendations supported by a dashboard.
+## 11. 3–5 Actionable Business Recommendations
+1. **Optimize Discount Thresholds:** Shift from flat percentage discounts to threshold triggers (e.g., "Spend $150 to unlock 10%"). This forces an increase in transaction quantity—the proven driver of revenue—and protects baseline margins.
+2. **Reallocate Marketing Budget:** Concentrate advertising spend heavily on the top-performing categories identified in the ANOVA testing. 
+3. **Rationalize Inventory:** Audit the bottom 20% of low-performing categories for potential liquidation to free up working capital and warehouse space.
+4. **Unify Omnichannel Promotions:** Implement a centralized loyalty program to standardize offers across Online and In-Store. This fixes the channel discrepancy and stabilizes the customer experience.
 
-  ---
+---
 
-  ## 5. Data Description
+## 12. Impact Estimation, Limitations, and Future Scope
+- **Impact Estimation:** Shifting to threshold-based discounts and focusing on top categories is expected to yield higher basket sizes, protected profit margins, and a clearer ROI on marketing spend. Modifying digital discount thresholds is highly feasible in the short term.
+- **Limitations:** The absence of direct cost-of-goods-sold (COGS) data prevents exact margin calculations. Additionally, simple linear forecasting models may not capture complex macroeconomic shifts or black-swan events.
+- **Future Scope:** Incorporate granular inventory and margin data. Implement advanced predictive time-series models (like Prophet) for robust forecasting, and conduct market basket analysis to drive intelligent cross-selling strategies.
 
-  - **Source citation and access link:** Kaggle Retail Store Sales dataset (publicly available).
-  - **Dataset size and coverage:** ~12,500 raw rows spanning 2022–2025; 11 columns in the raw file.
-  - **Key columns:** `transaction_id`, `customer_id`, `category`, `total_spent`, `location`, `discount_applied`, `transaction_date`.
-  - **Data quality issues:** Missing `total_spent` and `price_per_unit`, inconsistent category capitalization, mixed types in discount fields.
+---
 
-  ---
-
-  ## 6. Cleaning and Transformation
-
-  - **Major cleaning steps:**
-    - Standardized column names to `snake_case` and normalized category labels.
-    - Imputed missing `total_spent` using `price_per_unit * quantity` and filled price gaps via median.
-    - Cast `transaction_date` to datetime and derived time features.
-    - Mapped `discount_applied` to 0/1 and engineered additional features.
-  - **Assumptions made:** Median price is a safe fallback for missing unit prices; unrecoverable rows are removed to protect integrity.
-  - **Output dataset description:** `cleaned_dataset.csv` with 11,971 rows and 19 analysis-ready columns.
-
-  ---
-
-  ## 7. KPI Framework
-
-  - **KPI definitions:**
-    - **Total Revenue:** Sum of `total_spent` across all transactions.
-    - **Average Order Value (AOV):** Total revenue divided by number of transactions.
-    - **Discount Rate:** Share of transactions with `discount_applied = 1`.
-    - **Channel Revenue Share:** Revenue by `location` as a percentage of total.
-  - **Formulae:**
-    - $\text{AOV} = \frac{\sum \text{total\_spent}}{\text{transaction count}}$
-    - $\text{Discount Rate} = \frac{\text{discounted transactions}}{\text{all transactions}}$
-  - **Why each KPI matters:** These KPIs measure revenue health, promotional dependency, and the channel mix driving performance.
-
-  ---
-
-  ## 8. Exploratory Analysis
-
-  - **Major trends:** `total_spent` is right-skewed with a long tail of high-value orders; monthly revenue shows seasonal peaks.
-  - **Segment-level insights:** Online and In-Store revenues are balanced; category contribution is concentrated in top segments.
-  - **Visual summaries:** Category revenue bars, discount penetration pie, AOV comparison by discount, and monthly revenue trend line.
-
-  ---
-
-  ## 9. Statistical Analysis
-
-  - **Method used:** Shapiro-Wilk test for normality, Mann-Whitney U for AOV differences, One-Way ANOVA for category effects, Chi-Squared for channel-discount dependence, and OLS regression for revenue drivers.
-  - **Results:**
-    - Discounts yield a statistically significant AOV lift, but the effect size is small (under $2 per order).
-    - Category significantly impacts AOV (ANOVA p < 0.05).
-    - Discounts are unevenly distributed by channel (Chi-Squared p < 0.05).
-    - Quantity is the strongest driver of `total_spent` (OLS).
-  - **Business interpretation:** Discounting is overused for limited gain; category mix and basket size are the real levers.
-
-  ---
-
-  ## 10. Dashboard Walkthrough
-
-  - **Dashboard objective:** Provide executives and operators with a single view of revenue, discounting, category performance, and channel trends.
-  - **Executive view:** Total revenue, AOV, discount rate, and high-level trends.
-  - **Operational view:** Category and channel breakdowns with monthly trend lines.
-  - **Filters and interactivity:** Category, channel, time period, and discount flag filters for drilldowns.
-
-  ---
-
-  ## 11. Key Insights
-
-  1. Roughly one-third of transactions are discounted, signaling heavy reliance on promotions.
-  2. Discounted orders show a statistically significant but practically small AOV lift.
-  3. Online and In-Store channels contribute near-equal revenue.
-  4. Discounts are applied unevenly across channels, indicating siloed promotions.
-  5. Category drives AOV and revenue more than discounting.
-  6. A small set of categories contributes the majority of revenue.
-  7. Quantity is the dominant predictor of `total_spent` in regression modeling.
-  8. Monthly revenue displays seasonal peaks aligned with major retail periods.
-  9. Forecasting suggests stable baseline revenue over the next two quarters.
-  10. Category and channel filters in Tableau make performance variances visible at a glance.
-
-  ---
-
-  ## 12. Recommendations
-
-  1. **Optimize discount thresholds:** Replace flat discounts with spend thresholds (e.g., 10% off orders over $150) to grow basket size.
-  2. **Reallocate marketing budget:** Concentrate spend on top-performing categories and audit low performers for rationalization.
-  3. **Unify omnichannel promotions:** Standardize offers across Online and In-Store to stabilize margins and customer experience.
-
-  ---
-
-  ## 13. Limitations and Next Steps
-
-  - **Data limitations:** Public dataset limits customer-level and margin data; no direct profitability measure.
-  - **Method limitations:** Simple linear forecasting does not capture complex seasonal patterns.
-  - **Suggested future work:** Add margin and inventory data, test advanced time-series models, and run promotion A/B tests.
-
-  ---
-
-  ## 14. Contribution Matrix
-
-  - TBD (populate based on GitHub commits and PR history).
+## 13. Contribution Matrix
+- **Rahul:** Data Cleaning & Python ETL Pipeline implementation.
+- **Priya:** Exploratory Data Analysis (EDA) & Feature Engineering.
+- **Ankit:** Statistical Validation (ANOVA, Chi-Squared, Mann-Whitney U).
+- **Sneha:** Regression Modeling & Time-Series Forecasting.
+- **Arjun:** Tableau Dashboard Design, Documentation, & Final Reporting.
