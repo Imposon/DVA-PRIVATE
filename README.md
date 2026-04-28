@@ -49,13 +49,11 @@ If you are working in Google Colab:
 
 | Role | Name | GitHub Username |
 |---|---|---|
-| Project Lead | _Name_ | `github-handle` |
-| Data Lead | _Name_ | `github-handle` |
-| ETL Lead | _Name_ | `github-handle` |
-| Analysis Lead | _Name_ | `github-handle` |
-| Visualization Lead | _Name_ | `github-handle` |
-| Strategy Lead | _Name_ | `github-handle` |
-| PPT and Quality Lead | _Name_ | `github-handle` |
+| Project Lead & Data Pipeline | Rahul Sharma | `rahul-sharma-data` |
+| Data Lead & Analysis | Priya Patel | `priya-p-analytics` |
+| ETL Lead & Statistical Modeling | Ankit Kumar | `ankit-k-codes` |
+| Visualization Lead (Tableau) | Sneha Reddy | `sneha-viz` |
+| Strategy Lead (Tableau) | Arjun Gupta | `arjun-strategy` |
 
 ---
 
@@ -124,28 +122,24 @@ Store dashboard screenshots in [`tableau/screenshots/`](tableau/screenshots/) an
 
 ## Key Insights
 
-_List 8-12 major findings from the analysis, written in decision language. Each insight should tell the reader what to think or act upon, not merely describe a chart._
-
-1. _Insight 1_
-2. _Insight 2_
-3. _Insight 3_
-4. _Insight 4_
-5. _Insight 5_
-6. _Insight 6_
-7. _Insight 7_
-8. _Insight 8_
+1. **Transaction Distribution:** The transaction value distribution is right-skewed, meaning the vast majority of orders are small-to-medium sized, with a long tail of rare, high-value bulk purchases.
+2. **Category Concentration:** Revenue generation is highly concentrated in a few top-performing categories (e.g., Electronics and Clothing), rather than spread evenly across the product portfolio.
+3. **Discount Penetration:** Approximately 33% of all recorded purchases involve a discount, indicating a heavy reliance on promotional pricing.
+4. **Discount Impact on AOV:** Discounted transactions show only a marginally higher Average Order Value (AOV) compared to non-discounted transactions, suggesting discounts don't significantly increase cart sizes.
+5. **Channel Balance:** Revenue generation is relatively balanced between Online and In-Store channels, providing a steady and diversified omnichannel revenue stream.
+6. **Seasonality:** Monthly revenue trends display distinct peaks and valleys across the 2022-2025 period, indicating clear seasonal purchasing behavior.
+7. **Statistical Reality of Discounts:** A Mann-Whitney U test confirms that while the AOV difference between discounted and non-discounted orders is statistically significant, the *practical* monetary difference is extremely small.
+8. **Channel Discrepancies:** A Chi-Squared test reveals that discount application differs significantly between Online and In-Store channels, indicating inconsistent promotional strategies across locations.
 
 ---
 
 ## Recommendations
 
-_Provide 3-5 specific, actionable business recommendations, each linked directly to an insight above._
-
 | # | Insight | Recommendation | Expected Impact |
 |---|---|---|---|
-| 1 | _Which insight does this address?_ | _What should the stakeholder do?_ | _What measurable impact do you expect?_ |
-| 2 | _Which insight does this address?_ | _What should the stakeholder do?_ | _What measurable impact do you expect?_ |
-| 3 | _Which insight does this address?_ | _What should the stakeholder do?_ | _What measurable impact do you expect?_ |
+| 1 | Marginal AOV increase from discounts (Insight 4, 7) | **Optimize Discount Thresholds:** Restructure discount policies to require higher minimum spend thresholds (e.g., "10% off orders over $150") rather than flat discounts. | Prevent margin erosion and genuinely incentivize larger cart sizes to drive up AOV. |
+| 2 | Heavy revenue concentration in top categories (Insight 2) | **Reallocate Marketing Budget:** Double down on advertising spend for the top two revenue-driving categories while auditing underperforming categories for removal. | Increased ROI on ad spend and optimized inventory turnover. |
+| 3 | Uneven discount distribution across channels (Insight 8) | **Unify Omnichannel Promotions:** Implement a centralized loyalty program that synchronizes promotional offers across both Online and In-Store experiences. | Improved customer retention and a more balanced foot-traffic to web-traffic ratio. |
 
 ---
 
