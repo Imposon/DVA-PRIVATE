@@ -3,9 +3,10 @@
 ## 1. Cover Page
 - **Project title:** Retail Store Sales Analytics: Driving Revenue Through Data
 - **Sector:** Retail / E-Commerce
-- **Team ID and team members:** [Team ID] - Rahul, Priya, Ankit, Sneha, Arjun
-- **Institute:** Newton School of Technology | Data Visualization & Analytics
-- **Faculty mentor:** [Faculty Mentor Name]
+- **Team Name:** CS:GO
+- **Team Members:** Aditya Sinha, Ansh Kumar, Ayush Kumar, Vedansha Srivastava, Shekhar Narayan Mishra
+- **Institute:** Newton School of Technology
+- **Faculty mentor:** Vrushali Masane
 - **Submission date:** 28 April 2026
 
 ---
@@ -115,9 +116,12 @@ An interactive Tableau dashboard was built directly on top of the aggregated `ta
 
 ---
 
-## 13. Contribution Matrix
-- **Rahul:** Data Cleaning & Python ETL Pipeline implementation.
-- **Priya:** Exploratory Data Analysis (EDA) & Feature Engineering.
-- **Ankit:** Statistical Validation (ANOVA, Chi-Squared, Mann-Whitney U).
-- **Sneha:** Regression Modeling & Time-Series Forecasting.
-- **Arjun:** Tableau Dashboard Design, Documentation, & Final Reporting.
+## 14. Contribution Matrix
+
+| Team Member | Dataset & Sourcing | ETL & Cleaning | EDA & Analysis | Statistical Analysis | Tableau Dashboard | Report Writing | PPT & Viva |
+|---|---|---|---|---|---|---|---|
+| Ansh Kumar | Worked on | Assisted | Worked on | Assisted | Worked on | | |
+| Aditya Sinha | Worked on | Assisted | Worked on | Worked on | Worked on | | Assisted |
+| Ayush Kumar | Worked on | Worked on | Worked on | | | | Assisted |
+| Shekhar Narayan Mishra | Worked on | Worked on | | | | | Worked on |
+| Vedansha Srivastava | | | Worked on | | | | Worked on |
