@@ -75,8 +75,8 @@
 ## Slide 13 - Contribution Matrix
 | Team Member | Dataset & Sourcing | ETL & Cleaning | EDA & Analysis | Statistical Analysis | Tableau Dashboard | Report Writing | PPT & Viva |
 |---|---|---|---|---|---|---|---|
-| Ansh Kumar | Worked on | Assisted | Worked on | Assisted | Worked on | | |
-| Aditya Sinha | Worked on | Assisted | Worked on | Worked on | Worked on | | Assisted |
+| Ansh Kumar | | Worked on | Assisted | Worked on | Assisted | Worked on | |
+| Aditya Sinha | Worked on | Assisted | Worked on | Worked on | Worked on | Assisted | |
 | Ayush Kumar | Worked on | Worked on | Worked on | | | | Assisted |
-| Shekhar Narayan Mishra | Worked on | Worked on | | | | | Worked on |
+| Shekhar Narayan Mishra | | Worked on | Worked on | | | | Worked on |
 | Vedansha Srivastava | | | Worked on | | | | Worked on |
