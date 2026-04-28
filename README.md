@@ -37,9 +37,9 @@ If you are working in Google Colab:
 
 | Field | Details |
 |---|---|
-| **Project Title** | _To be filled by team_ |
-| **Sector** | _e.g. Retail, Finance, Healthcare, EdTech_ |
-| **Team ID** | _e.g. DVA-B1-T3_ |
+| **Project Title** | Retail Store Sales Analysis |
+| **Sector** | Retail / E-commerce |
+| **Team ID** | _To be filled by team_ |
 | **Section** | _To be filled by team_ |
 | **Faculty Mentor** | _To be filled by team_ |
 | **Institute** | Newton School of Technology |
@@ -61,15 +61,15 @@ If you are working in Google Colab:
 
 ## Business Problem
 
-_Describe the sector context, the decision-maker this project serves, and the core business challenge being addressed. Keep this to 3-5 sentences written in plain language, as if addressing a senior stakeholder._
+The retail sector faces continuous pressure to optimize product assortment, pricing strategies, and marketing campaigns to maximize revenue. Understanding customer purchasing patterns across different channels (Online vs. In-Store) and payment methods is crucial for targeted promotions. Furthermore, measuring the true impact of discounts on overall revenue and volume helps refine discounting strategies to ensure profitability.
 
 **Core Business Question**
 
-> _State the single main question your Tableau dashboard and Python analysis will answer._
+> How can we optimize sales strategies by understanding the impact of discounts, evaluating channel performance (Online vs. In-Store), and identifying top-revenue product categories?
 
 **Decision Supported**
 
-> _What action or decision will this analysis enable the stakeholder to take?_
+> This analysis enables retail management to optimize discount frequency and depth, allocate marketing budget toward high-performing categories, and tailor the shopping experience based on preferred payment methods and location trends.
 
 ---
 
@@ -77,21 +77,20 @@ _Describe the sector context, the decision-maker this project serves, and the co
 
 | Attribute | Details |
 |---|---|
-| **Source Name** | _e.g. World Bank, data.gov.in, Kaggle (raw only)_ |
-| **Direct Access Link** | _Paste the direct download or access URL_ |
-| **Row Count** | _Must be greater than 5,000_ |
-| **Column Count** | _Must be greater than 8 meaningful columns_ |
-| **Time Period Covered** | _e.g. Jan 2019 to Dec 2023_ |
-| **Format** | _e.g. CSV, JSON, Excel_ |
+| **Source Name** | Kaggle - Retail Store Sales |
+| **Row Count** | ~12,500 |
+| **Column Count** | 11 original columns |
+| **Time Period Covered** | 2022 to 2025 |
+| **Format** | CSV |
 
 **Key Columns Used**
 
 | Column Name | Description | Role in Analysis |
 |---|---|---|
-| _column_1_ | _What it means_ | _Used for KPI / filter / segmentation_ |
-| _column_2_ | _What it means_ | _Used for KPI / filter / segmentation_ |
-| _column_3_ | _What it means_ | _Used for KPI / filter / segmentation_ |
-| _column_4_ | _What it means_ | _Used for KPI / filter / segmentation_ |
+| `total_spent` | Total transaction amount | Primary measure for revenue and AOV |
+| `category` | Product category | Used for segmenting revenue by product type |
+| `discount_applied` | Whether a discount was given | Used to analyze the business impact of discounting |
+| `location` | Online vs. In-store | Used to analyze channel performance |
 
 For full column definitions, see [`docs/data_dictionary.md`](docs/data_dictionary.md).
 
@@ -101,9 +100,10 @@ For full column definitions, see [`docs/data_dictionary.md`](docs/data_dictionar
 
 | KPI | Definition | Formula / Computation |
 |---|---|---|
-| _e.g. Monthly Revenue Growth %_ | _What business outcome this tracks_ | _Show the exact formula or notebook reference_ |
-| _e.g. Customer Churn Rate_ | _What business outcome this tracks_ | _Show the exact formula or notebook reference_ |
-| _e.g. Repeat Purchase Rate_ | _What business outcome this tracks_ | _Show the exact formula or notebook reference_ |
+| **Total Revenue** | The overall revenue generated from all sales | `sum(total_spent)` |
+| **Average Order Value (AOV)** | The average revenue per transaction | `mean(total_spent)` |
+| **Discount Rate** | Percentage of transactions that received a discount | `count(discount_applied == 1) / total_transactions` |
+| **Online vs. In-store %** | Revenue/transaction share by location channel | `count(location == 'Online') / total_transactions` |
 
 Document KPI logic clearly in `notebooks/04_statistical_analysis.ipynb` and `notebooks/05_final_load_prep.ipynb`.
 
@@ -114,9 +114,9 @@ Document KPI logic clearly in `notebooks/04_statistical_analysis.ipynb` and `not
 | Item | Details |
 |---|---|
 | **Dashboard URL** | _Paste Tableau Public link here_ |
-| **Executive View** | _Describe the high-level KPI summary view_ |
-| **Operational View** | _Describe the detailed drill-down view_ |
-| **Main Filters** | _List the interactive filters used_ |
+| **Executive View** | High-level summary of total revenue, AOV, and discount usage |
+| **Operational View** | Breakdown of sales by category, payment method, and monthly trends |
+| **Main Filters** | Date range, Category, Location, Payment Method |
 
 Store dashboard screenshots in [`tableau/screenshots/`](tableau/screenshots/) and document the public links in [`tableau/dashboard_links.md`](tableau/dashboard_links.md).
 
@@ -194,112 +194,7 @@ The project follows a structured 7-step workflow:
 
 1. **Define** - Sector selected, problem statement scoped, mentor approval obtained.
 2. **Extract** - Raw dataset sourced and committed to `data/raw/`; data dictionary drafted.
-3. **Clean and Transform** - Cleaning pipeline built in `notebooks/02_cleaning.ipynb` and optionally `scripts/etl_pipeline.py`.
+3. **Clean and Transform** - Cleaning pipeline built in `notebooks/02_cleaning.ipynb` and `scripts/etl_pipeline.py`.
 4. **Analyze** - EDA and statistical analysis performed in notebooks `03` and `04`.
 5. **Visualize** - Interactive Tableau dashboard built and published on Tableau Public.
 6. **Recommend** - 3-5 data-backed business recommendations delivered.
-7. **Report** - Final project report and presentation deck completed and exported to PDF in `reports/`.
-
----
-
-## Tech Stack
-
-| Tool | Status | Purpose |
-|---|---|---|
-| Python + Jupyter Notebooks | Mandatory | ETL, cleaning, analysis, and KPI computation |
-| Google Colab | Supported | Cloud notebook execution environment |
-| Tableau Public | Mandatory | Dashboard design, publishing, and sharing |
-| GitHub | Mandatory | Version control, collaboration, contribution audit |
-| SQL | Optional | Initial data extraction only, if documented |
-
-**Recommended Python libraries:** `pandas`, `numpy`, `matplotlib`, `seaborn`, `scipy`, `statsmodels`
-
----
-
-## Evaluation Rubric
-
-| Area | Marks | Focus |
-|---|---|---|
-| Problem Framing | 10 | Is the business question clear and well-scoped? |
-| Data Quality and ETL | 15 | Is the cleaning pipeline thorough and documented? |
-| Analysis Depth | 25 | Are statistical methods applied correctly with insight? |
-| Dashboard and Visualization | 20 | Is the Tableau dashboard interactive and decision-relevant? |
-| Business Recommendations | 20 | Are insights actionable and well-reasoned? |
-| Storytelling and Clarity | 10 | Is the presentation professional and coherent? |
-| **Total** | **100** | |
-
-> Marks are awarded for analytical thinking and decision relevance, not chart quantity, visual decoration, or code length.
-
----
-
-## Submission Checklist
-
-**GitHub Repository**
-
-- [ ] Public repository created with the correct naming convention (`SectionName_TeamID_ProjectName`)
-- [ ] All notebooks committed in `.ipynb` format
-- [ ] `data/raw/` contains the original, unedited dataset
-- [ ] `data/processed/` contains the cleaned pipeline output
-- [ ] `tableau/screenshots/` contains dashboard screenshots
-- [ ] `tableau/dashboard_links.md` contains the Tableau Public URL
-- [ ] `docs/data_dictionary.md` is complete
-- [ ] `README.md` explains the project, dataset, and team
-- [ ] All members have visible commits and pull requests
-
-**Tableau Dashboard**
-
-- [ ] Published on Tableau Public and accessible via public URL
-- [ ] At least one interactive filter included
-- [ ] Dashboard directly addresses the business problem
-
-**Project Report**
-
-- [ ] Final report exported as PDF into `reports/`
-- [ ] Cover page, executive summary, sector context, problem statement
-- [ ] Data description, cleaning methodology, KPI framework
-- [ ] EDA with written insights, statistical analysis results
-- [ ] Dashboard screenshots and explanation
-- [ ] 8-12 key insights in decision language
-- [ ] 3-5 actionable recommendations with impact estimates
-- [ ] Contribution matrix matches GitHub history
-
-**Presentation Deck**
-
-- [ ] Final presentation exported as PDF into `reports/`
-- [ ] Title slide through recommendations, impact, limitations, and next steps
-
-**Individual Assets**
-
-- [ ] DVA-oriented resume updated to include this capstone
-- [ ] Portfolio link or project case study added
-
----
-
-## Contribution Matrix
-
-This table must match evidence in GitHub Insights, PR history, and committed files.
-
-| Team Member | Dataset and Sourcing | ETL and Cleaning | EDA and Analysis | Statistical Analysis | Tableau Dashboard | Report Writing | PPT and Viva |
-|---|---|---|---|---|---|---|---|
-| _Member 1_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ |
-| _Member 2_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ |
-| _Member 3_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ |
-| _Member 4_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ |
-| _Member 5_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ |
-| _Member 6_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ | _Owner / support_ |
-
-_Declaration: We confirm that the above contribution details are accurate and verifiable through GitHub Insights, PR history, and submitted artifacts._
-
-**Team Lead Name:** _____________________________
-
-**Date:** _______________
-
----
-
-## Academic Integrity
-
-All analysis, code, and recommendations in this repository must be the original work of the team listed above. Free-riding is tracked via GitHub Insights and pull request history. Any mismatch between the contribution matrix and actual commit history may result in individual grade adjustments.
-
----
-
-*Newton School of Technology - Data Visualization & Analytics | Capstone 2*

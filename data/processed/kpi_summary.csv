@@ -1,0 +1,13 @@
+kpi,value
+total_transactions,11971
+total_revenue,1552071.0
+avg_order_value,129.65
+median_order_value,108.5
+discount_rate_pct,33.57
+discounted_avg_revenue,130.49
+non_discounted_avg_rev,129.23
+top_category,Butchers
+top_payment_method,Cash
+top_location,Online
+online_pct,50.99
+instore_pct,49.01

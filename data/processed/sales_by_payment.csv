@@ -1,0 +1,4 @@
+payment_method,total_revenue,total_transactions,avg_order_value,discount_transactions,discount_rate_pct
+Cash,537710.0,4103,131.05,1387,33.8
+Credit Card,507082.0,3927,129.13,1330,33.87
+Digital Wallet,507279.0,3941,128.72,1302,33.04
